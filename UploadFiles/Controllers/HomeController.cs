@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace UploadFiles.Controllers
 {
@@ -40,17 +41,20 @@ namespace UploadFiles.Controllers
                     UploadPartialFile(headers["X-File-Name"], Request, statuses);
                 }
 
-                JsonResult result = Json(statuses);
-                result.ContentType = "text/plain";
+                var serializer = new JavaScriptSerializer();
+                serializer.MaxJsonLength = Int32.MaxValue;
 
+                var result = new ContentResult
+                {
+                    Content = serializer.Serialize(statuses),
+                    ContentType = "application/json"
+                };
                 return result;
             }
 
             return Json(r);
         }
 
-        //DONT USE THIS IF YOU NEED TO ALLOW LARGE FILES UPLOADS
-        //Credit to i-e-b and his ASP.Net uploader for the bulk of the upload helper methods - https://github.com/i-e-b/jQueryFileUpload.Net
         private void UploadPartialFile(string fileName, HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
         {
             if (request.Files.Count != 1) throw new HttpRequestValidationException("Attempt to upload chunked file containing more than one fragment per request");
@@ -84,8 +88,6 @@ namespace UploadFiles.Controllers
             });
         }
 
-        //DONT USE THIS IF YOU NEED TO ALLOW LARGE FILES UPLOADS
-        //Credit to i-e-b and his ASP.Net uploader for the bulk of the upload helper methods - https://github.com/i-e-b/jQueryFileUpload.Net
         private void UploadWholeFile(HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
         {
             for (int i = 0; i < request.Files.Count; i++)
@@ -115,7 +117,6 @@ namespace UploadFiles.Controllers
         }
 
 
-        //DONT USE THIS IF YOU NEED TO ALLOW LARGE FILES UPLOADS
         [HttpGet]
         public void Delete(string id)
         {
@@ -128,7 +129,7 @@ namespace UploadFiles.Controllers
             }
         }
 
-        //DONT USE THIS IF YOU NEED TO ALLOW LARGE FILES UPLOADS
+
         [HttpGet]
         public void Download(string id)
         {
