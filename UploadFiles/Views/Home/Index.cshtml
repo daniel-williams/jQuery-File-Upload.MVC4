@@ -2,18 +2,12 @@
     ViewBag.Title = "Upload";
 }
 
-@*<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet" />*@
-<link href="~/styles/bootstrap.min.css" rel="stylesheet" />
-    
-<link href="~/styles/FileUpload/jquery.fileupload-ui.css" rel="stylesheet" />
-
-
-
-<!-- Shim to make HTML5 elements usable in older Internet Explorer versions -->
-<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+@section styles
+{
+    @Styles.Render("~/styles/FileUpload/css")
+}
 
 <h2>Upload</h2>
-
 
 <form id="fileupload" action="@Url.Action("Uploads")" method="POST" enctype="multipart/form-data">
     <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
@@ -119,23 +113,11 @@
 </script>
 
 
+@section scripts
+{
 
-<script src="~/scripts/jquery-1.7.1.min.js"></script>
-<script src="~/scripts/jquery-ui-1.8.20.min.js"></script>
+    @Scripts.Render("~/scripts/FileUpload/js")
 
-<script src="~/scripts/FileUpload/tmpl.min.js"></script>
-<script src="~/scripts/FileUpload/load-image.min.js"></script>
-<script src="~/scripts/FileUpload/canvas-to-blob.min.js"></script>
-
-
-@*<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>*@
-<script src="~/scripts/bootstrap.min.js"></script>
+}
 
 
-<script src="~/scripts/FileUpload/jquery.iframe-transport.js"></script>
-<script src="~/scripts/FileUpload/jquery.fileupload.js"></script>
-<script src="~/scripts/FileUpload/jquery.fileupload-ip.js"></script>
-<script src="~/scripts/FileUpload/jquery.fileupload-ui.js"></script>
-
-<script src="~/scripts/FileUpload/locale.js"></script>
-<script src="~/scripts/FileUpload/main.js"></script>
