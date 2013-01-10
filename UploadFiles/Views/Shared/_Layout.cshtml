@@ -1,16 +1,18 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- Force latest IE rendering engine or ChromeFrame if installed -->
+        <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
         <meta charset="utf-8" />
-        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <title>@ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
 
-        @Styles.Render("~/styles/Bootstrap/css")
-        @Styles.Render("~/styles/css")
+        @Styles.Render("~/styles/Bootstrap")
+        @Styles.Render("~/styles/Site")
         @RenderSection("styles", required: false)
 
-        @Scripts.Render("~/scripts/modernizr")
+        @Scripts.Render("~/scripts/Modernizr")
 
 
     </head>
@@ -18,7 +20,7 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("jQuery-File-Upload.MVC4", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -48,7 +50,8 @@
             </div>
         </footer>
 
-        @Scripts.Render("~/scripts/js")
+        @Scripts.Render("~/scripts/jQuery")
+        @Scripts.Render("~/scripts/Bootstrap")
         @RenderSection("scripts", required: false)
 
     </body>

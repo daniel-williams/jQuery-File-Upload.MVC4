@@ -171,21 +171,31 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="scripts\Bootstrap\bootstrap-image-gallery.js" />
+    <Content Include="scripts\Bootstrap\bootstrap-image-gallery.min.js" />
+    <Content Include="scripts\FileUpload\canvas-to-blob.js" />
+    <Content Include="scripts\FileUpload\canvas-to-blob.min.js" />
+    <Content Include="scripts\Bootstrap\bootstrap.min.js" />
+    <Content Include="scripts\FileUpload\cors\jquery.postmessage-transport.js" />
+    <Content Include="scripts\FileUpload\cors\jquery.xdr-transport.js" />
+    <Content Include="scripts\FileUpload\jquery.fileupload-fp.js" />
+    <Content Include="scripts\FileUpload\load-image.js" />
+    <Content Include="scripts\FileUpload\load-image.min.js" />
+    <Content Include="scripts\FileUpload\tmpl.js" />
+    <Content Include="scripts\FileUpload\tmpl.min.js" />
+    <Content Include="scripts\FileUpload\vendor\jquery.ui.widget.js" />
     <Content Include="styles\Bootstrap\bootstrap-responsive.css" />
     <Content Include="styles\Bootstrap\bootstrap-responsive.min.css" />
     <Content Include="styles\Bootstrap\bootstrap.css" />
     <Content Include="styles\Bootstrap\bootstrap.min.css" />
-    <Content Include="scripts\bootstrap.min.js" />
-    <Content Include="scripts\FileUpload\canvas-to-blob.js" />
-    <Content Include="scripts\FileUpload\jquery.fileupload-ip.js" />
+    <Content Include="styles\Bootstrap\bootstrap-image-gallery.css" />
+    <Content Include="styles\Bootstrap\bootstrap-image-gallery.min.css" />
+    <Content Include="styles\FileUpload\jquery.fileupload-ui-noscript.css" />
     <Content Include="styles\FileUpload\jquery.fileupload-ui.css" />
     <Content Include="scripts\FileUpload\jquery.fileupload-ui.js" />
     <Content Include="scripts\FileUpload\jquery.fileupload.js" />
     <Content Include="scripts\FileUpload\jquery.iframe-transport.js" />
-    <Content Include="scripts\FileUpload\load-image.js" />
-    <Content Include="scripts\FileUpload\locale.js" />
     <Content Include="scripts\FileUpload\main.js" />
-    <Content Include="scripts\FileUpload\tmpl.js" />
     <Content Include="styles\img\generalFile.png" />
     <Content Include="styles\img\glyphicons-halflings-white.png" />
     <Content Include="styles\img\loading.gif" />
@@ -239,11 +249,11 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Files\" />
@@ -265,9 +275,9 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>58333</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:44512/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

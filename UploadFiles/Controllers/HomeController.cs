@@ -17,42 +17,82 @@ namespace UploadFiles.Controllers
             return View();
         }
 
-        private string StorageRoot
+        
+
+        [HttpGet]
+        public ActionResult Uploads()
         {
-            get { return Path.Combine(Server.MapPath("~/App_Data/Files")); }
+            var fileData = new List<ViewDataUploadFilesResult>();
+
+            DirectoryInfo dir = new DirectoryInfo(StorageRoot);
+            if (dir.Exists)
+            {
+                string[] extensions = ImageMimeTypes.Keys.ToArray();
+
+                FileInfo[] files = dir.EnumerateFiles()
+                         .Where(f => extensions.Contains(f.Extension.ToLower()))
+                         .ToArray();
+
+                if(files.Length > 0)
+                {
+                    foreach (FileInfo file in files)
+                    {
+                        var fullPath = Path.Combine(StorageRoot, Path.GetFileName(file.Name));
+                        var fileNameEncoded = HttpUtility.HtmlEncode(Path.GetFileName(file.Name));
+
+                        fileData.Add(new ViewDataUploadFilesResult()
+                        {
+                            url = "/Home/Download/?id=" + fileNameEncoded,
+                            thumbnail_url = "/Home/Download/?id=" + fileNameEncoded,
+                            name = fileNameEncoded,
+                            type = ImageMimeTypes[file.Extension],
+                            size = Convert.ToInt32(file.Length),
+                            delete_url = "/Home/Delete/?id=" + fileNameEncoded,
+                            delete_type = "GET"
+                        });
+                    }
+                }
+            }
+
+            var serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = Int32.MaxValue;
+
+            var result = new ContentResult
+            {
+                Content = "{\"files\":" + serializer.Serialize(fileData) + "}",
+            };
+            return result;
         }
 
         [HttpPost]
-        public ActionResult Uploads()
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Uploads(string fileId = "default")
         {
-            var r = new List<ViewDataUploadFilesResult>();
+            var fileData = new List<ViewDataUploadFilesResult>();
 
             foreach (string file in Request.Files)
             {
-                var statuses = new List<ViewDataUploadFilesResult>();
+                
                 var headers = Request.Headers;
 
                 if (string.IsNullOrEmpty(headers["X-File-Name"]))
                 {
-                    UploadWholeFile(Request, statuses);
+                    UploadWholeFile(Request, fileData);
                 }
                 else
                 {
-                    UploadPartialFile(headers["X-File-Name"], Request, statuses);
+                    UploadPartialFile(headers["X-File-Name"], Request, fileData);
                 }
-
-                var serializer = new JavaScriptSerializer();
-                serializer.MaxJsonLength = Int32.MaxValue;
-
-                var result = new ContentResult
-                {
-                    Content = serializer.Serialize(statuses),
-                    ContentType = "application/json"
-                };
-                return result;
             }
 
-            return Json(r);
+            var serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = Int32.MaxValue;
+
+            var result = new ContentResult
+            {
+                Content = "{\"files\":" + serializer.Serialize(fileData) + "}",
+            };
+            return result;
         }
 
         private void UploadPartialFile(string fileName, HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
@@ -62,6 +102,7 @@ namespace UploadFiles.Controllers
             var inputStream = file.InputStream;
 
             var fullName = Path.Combine(StorageRoot, Path.GetFileName(fileName));
+            var fileNameEncoded = HttpUtility.HtmlEncode(Path.GetFileName(file.FileName));
 
             using (var fs = new FileStream(fullName, FileMode.Append, FileAccess.Write))
             {
@@ -78,13 +119,13 @@ namespace UploadFiles.Controllers
             }
             statuses.Add(new ViewDataUploadFilesResult()
             {
-                name = fileName,
-                size = file.ContentLength,
-                type = file.ContentType,
-                url = "/Home/Download/?id=" + fileName,
-                delete_url = "/Home/Delete/?id=" + fileName,
+                url = "/Home/Download/?id=" + fileNameEncoded,
                 thumbnail_url = @"data:image/png;base64," + EncodeFile(fullName),
-                delete_type = "GET",
+                name = fileNameEncoded,
+                type = file.ContentType,
+                size = file.ContentLength,
+                delete_url = "/Home/Delete/?id=" + fileNameEncoded,
+                delete_type = "GET"
             });
         }
 
@@ -95,18 +136,19 @@ namespace UploadFiles.Controllers
                 var file = request.Files[i];
 
                 var fullPath = Path.Combine(StorageRoot, Path.GetFileName(file.FileName));
+                var fileNameEncoded = HttpUtility.HtmlEncode(Path.GetFileName(file.FileName));
 
                 file.SaveAs(fullPath);
 
                 statuses.Add(new ViewDataUploadFilesResult()
                 {
-                    name = file.FileName,
-                    size = file.ContentLength,
-                    type = file.ContentType,
-                    url = "/Home/Download/?id=" + file.FileName,
-                    delete_url = "/Home/Delete/?id=" + file.FileName,
+                    url = "/Home/Download/?id=" + fileNameEncoded,
                     thumbnail_url = @"data:image/png;base64," + EncodeFile(fullPath),
-                    delete_type = "GET",
+                    name = fileNameEncoded,
+                    type = file.ContentType,
+                    size = file.ContentLength,
+                    delete_url = "/Home/Delete/?id=" + fileNameEncoded,
+                    delete_type = "GET"
                 });
             }
         }
@@ -148,16 +190,29 @@ namespace UploadFiles.Controllers
             else
                 context.Response.StatusCode = 404;
         }
+
+
+        private string StorageRoot
+        {
+            get { return Path.Combine(Server.MapPath("~/App_Data/Files")); }
+        }
+
+        private static Dictionary<string, string> ImageMimeTypes = new Dictionary<string, string>
+		{
+			{ ".gif", "image/gif" },
+			{ ".jpg", "image/jpeg" },
+			{ ".png", "image/png" },
+		};
     }
 
     public class ViewDataUploadFilesResult
     {
-        public string name { get; set; }
-        public int size { get; set; }
-        public string type { get; set; }
         public string url { get; set; }
-        public string delete_url { get; set; }
         public string thumbnail_url { get; set; }
+        public string name { get; set; }
+        public string type { get; set; }
+        public int size { get; set; }
+        public string delete_url { get; set; }
         public string delete_type { get; set; }
     }
 }
