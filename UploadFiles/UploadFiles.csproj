@@ -162,17 +162,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IDGen.cs" />
+    <Compile Include="MimeTypes.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewDataUploadFilesResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="scripts\Bootstrap\bootstrap-image-gallery.js" />
-    <Content Include="scripts\Bootstrap\bootstrap-image-gallery.min.js" />
     <Content Include="scripts\FileUpload\canvas-to-blob.js" />
     <Content Include="scripts\FileUpload\canvas-to-blob.min.js" />
     <Content Include="scripts\Bootstrap\bootstrap.min.js" />

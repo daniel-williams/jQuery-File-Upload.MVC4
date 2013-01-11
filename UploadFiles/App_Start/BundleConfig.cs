@@ -11,7 +11,6 @@ namespace UploadFiles
             bundles.Add(new StyleBundle("~/styles/Bootstrap")
                 .Include("~/styles/Bootstrap/bootstrap.css")
                 .Include("~/styles/Bootstrap/bootstrap-responsive.css")
-                .Include("~/styles/Bootstrap/bootstrap-image-gallery.css")
                 );
 
             bundles.Add(new StyleBundle("~/styles/Site")
@@ -38,7 +37,6 @@ namespace UploadFiles
 
             bundles.Add(new ScriptBundle("~/scripts/Bootstrap")
                 .Include("~/scripts/Bootstrap/bootstrap.js")
-                .Include("~/scripts/Bootstrap/bootstrap-image-gallery.js")
                 );
                         
 
@@ -58,8 +56,6 @@ namespace UploadFiles
 
             bundles.Add(new ScriptBundle("~/scripts/Knockout")
                 .Include("~/scripts/knockout-{version}.js")
-                .Include("~/scripts/knockout.mapping-{version}.js")
-                .Include("~/scripts/koExternalTemplateEngine_all.js")
                 );
         }
     }
