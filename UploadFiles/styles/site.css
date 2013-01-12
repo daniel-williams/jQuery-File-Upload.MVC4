@@ -760,3 +760,6 @@ tr.pager td {
 #fileupload{
     margin-top:30px;
 }
+.preview img {
+    max-width: 450px;
+}
